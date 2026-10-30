@@ -1,0 +1,167 @@
+:root { color-scheme: only light; }
+html  { color-scheme: only light; scroll-behavior: smooth; }
+
+/* base */
+html body {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    color: #f4f9fd;
+    background-color: #587690;
+    background-image: linear-gradient(180deg, #7391a6 0%, #587690 100%);
+    background-attachment: fixed;
+}
+
+/* color */
+.site-header { background: #4b6a84; border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
+.site-footer { background: #1f3448; }
+.panel       { background: #2e4962; }
+.panel-dark  { background: #1f3448; }
+.card        { background: #b7cfe2; color: #0f2233; }
+.card:hover  { background: #dbe9f4; }
+.text-soft   { color: #b7cfe2; }
+
+/* text */
+.font-display {
+    font-family: 'Anton', Impact, sans-serif;
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 0.95;
+}
+
+.tag {
+    font-family: 'Space Mono', ui-monospace, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+/* shapecut */
+.cut {
+    clip-path: polygon(
+        0 0,
+        calc(100% - 28px) 0,
+        100% 28px,
+        100% 100%,
+        28px 100%,
+        0 calc(100% - 28px)
+    );
+}
+
+/* hero and mountain */
+.hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 520px;
+}
+
+.hero-spray {
+    position: absolute;
+    top: -0.5rem;
+    right: 0;
+    font-size: clamp(6rem, 22vw, 13rem);
+    transform: rotate(-6deg);
+    opacity: 0.6;
+    color: rgba(236, 246, 255, 0.55);
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.5), 0 0 28px rgba(255, 255, 255, 0.3);
+    filter: blur(0.8px);
+    pointer-events: none;
+    user-select: none;
+}
+
+.hero-mountain {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 45%;
+    opacity: 0.3;
+}
+
+.hero-content { position: relative; }
+
+.hero-sm { min-height: 280px; }
+
+.hero-sm .hero-spray { font-size: clamp(5rem, 16vw, 10rem); }
+
+/* button & menu */
+.btn {
+    display: inline-block;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 999px;
+    padding: 0.5rem 1.5rem;
+    transition: background-color 0.2s, color 0.2s;
+}
+.btn:hover { background: #f4f9fd; color: #1f3448; }
+
+.nav-link[aria-current="page"] { border-bottom: 1px solid #fff; }
+
+/* marquee */
+.marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+            mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 25s linear infinite;
+}
+
+/* berhenti saat kursor di atasnya */
+.marquee:hover .marquee-track { animation-play-state: paused; }
+
+.marquee-item { margin-right: 0.75rem; }
+
+@keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+}
+
+/* untuk pengunjung yang mematikan animasi di perangkatnya */
+@media (prefers-reduced-motion: reduce) {
+    .marquee { -webkit-mask-image: none; mask-image: none; }
+    .marquee-track { animation: none; width: auto; flex-wrap: wrap; row-gap: 0.75rem; }
+    .marquee-dup { display: none; }
+}
+
+/* laba-laba gantung di footer */
+.spider-wrap {
+    position: absolute;
+    top: 0;
+    right: 8%;
+    width: 160px;
+    height: 184px;
+    opacity: 0.35;
+    cursor: grab;
+    touch-action: pan-y; /* supaya di HP tidak ikut men-scroll saat digeser */
+    user-select: none;
+    z-index: 1;
+    transition: transform 0.6s cubic-bezier(0.3, 1.6, 0.5, 1), opacity 0.2s;
+}
+.spider-wrap:hover    { opacity: 0.6; }
+.spider-wrap.dragging { cursor: grabbing; opacity: 0.8; transition: none; }
+
+.spider-svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    transform-origin: 50% 0;                 /* berayun dari ujung benang */
+    animation: spider-swing 4s ease-in-out infinite alternate;
+}
+
+@keyframes spider-swing {
+    from { transform: rotate(-4deg); }
+    to   { transform: rotate(4deg); }
+}
+
+/* animasi dimatikan untuk pengunjung yang mengaktifkan "kurangi animasi" */
+@media (prefers-reduced-motion: reduce) {
+    .spider-svg { animation: none; }
+}
+
+/* di layar kecil disembunyikan supaya tidak menimpa quote */
+@media (max-width: 767px) {
+    .spider-wrap { display: none; }
+}
